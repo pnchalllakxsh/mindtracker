@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { Home, Activity, BookHeart, BrainCircuit, GraduationCap, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Home, Activity, BookHeart, BrainCircuit, GraduationCap, Settings, LogOut } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,7 +17,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Sidebar() {
-  const router = useRouter();
   const pathname = usePathname();
 
   const handleLogout = async () => {
