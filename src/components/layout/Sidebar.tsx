@@ -1,8 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Activity, BookHeart, BrainCircuit, GraduationCap, Settings, LogOut } from 'lucide-react';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -42,18 +42,8 @@ export function Sidebar() {
     { name: 'Settings', href: '/settings', icon: Settings },
   ];
 
-  const [userName, setUserName] = useState('');
-
-  useEffect(() => {
-    fetch('/api/auth/me')
-      .then(res => res.json())
-      .then(data => {
-        if (data.user) {
-          setUserName(data.user.name || '');
-        }
-      })
-      .catch(err => console.error(err));
-  }, []);
+  const { user } = useCurrentUser();
+  const userName = user?.name ?? '';
 
   const initials = userName ? userName.substring(0, 2).toUpperCase() : 'ME';
 

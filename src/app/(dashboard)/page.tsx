@@ -13,6 +13,7 @@ import {
   Tooltip,
   CartesianGrid,
 } from 'recharts';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 /** Shape of a mood trend data point used in the chart. */
 interface TrendPoint {
@@ -27,17 +28,12 @@ function formatDate(isoDate: string): string {
 }
 
 export default function DashboardPage() {
-  const [userName, setUserName] = useState('');
+  const { user } = useCurrentUser();
+  const userName = user?.name ?? '';
   const [trendData, setTrendData] = useState<TrendPoint[]>([]);
   const [insightLoading, setInsightLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch user profile
-    fetch('/api/auth/me')
-      .then(res => res.json())
-      .then(data => { if (data.user) setUserName(data.user.name || ''); })
-      .catch(err => console.error('[dashboard] auth/me:', err));
-
     // Fetch mood trends for the chart
     fetch('/api/insights')
       .then(res => res.json())
